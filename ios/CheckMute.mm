@@ -1,4 +1,5 @@
 #import "CheckMute.h"
+#import "AVFAudio/AVAudioSession.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RNCheckMuteSpec.h"
@@ -9,14 +10,19 @@ RCT_EXPORT_MODULE()
 
 // Example method
 // See // https://reactnative.dev/docs/native-modules-ios
-RCT_REMAP_METHOD(multiply,
-                 multiplyWithA:(double)a withB:(double)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(getCurrentVolume: (RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-  NSNumber *result = @(a * b);
+  [[AVAudioSession sharedInstance] setActive:YES error:nil];
+  float vol = [[AVAudioSession sharedInstance] outputVolume];
+  resolve(@(vol * 100));
+}
 
-  resolve(result);
+RCT_EXPORT_METHOD(isMute: (RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  [[AVAudioSession sharedInstance] setActive:YES error:nil];
+  float vol = [[AVAudioSession sharedInstance] outputVolume];
+  bool isMute = vol == 0 ? true : false;
+  resolve(@(isMute));
 }
 
 // Don't compile this code when we build for the old architecture.

@@ -6,7 +6,9 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const CheckMute = NativeModules.CheckMute  ? NativeModules.CheckMute  : new Proxy(
+const CheckMute = NativeModules.CheckMute
+  ? NativeModules.CheckMute
+  : new Proxy(
       {},
       {
         get() {
@@ -15,6 +17,10 @@ const CheckMute = NativeModules.CheckMute  ? NativeModules.CheckMute  : new Prox
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return CheckMute.multiply(a, b);
+export async function isMute(): Promise<boolean> {
+  return await CheckMute.isMute();
+}
+
+export async function getCurrentVolume(): Promise<number> {
+  return await CheckMute.getCurrentVolume();
 }

@@ -1,18 +1,27 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-check-mute';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { isMute } from 'react-native-check-mute';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<boolean | undefined>();
 
+  async function getMute() {
+    let muted = await isMute();
+    setResult(muted);
+  }
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    getMute();
   }, []);
+
+  console.log(result)
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Result: {result?.toString()}</Text>
+      <TouchableOpacity onPress={getMute}>
+        <Text>Gfgdf</Text>
+      </TouchableOpacity>
     </View>
   );
 }

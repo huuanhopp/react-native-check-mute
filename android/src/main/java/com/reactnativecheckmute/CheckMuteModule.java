@@ -1,6 +1,12 @@
 package com.reactnativecheckmute;
 
+import static android.content.Context.AUDIO_SERVICE;
+
+import android.media.AudioManager;
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -22,12 +28,18 @@ public class CheckMuteModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @ReactMethod
-    public void multiply(double a, double b, Promise promise) {
-        promise.resolve(a * b);
+    public void isMute(final Promise promise) {
+        AudioManager am = (AudioManager) getReactApplicationContext().getSystemService(AUDIO_SERVICE);
+        int volume_level= am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        promise.resolve(volume_level == 0);
+    }
+
+    @ReactMethod
+    public void getCurrentVolume(final Promise promise) {
+        AudioManager am = (AudioManager) getReactApplicationContext().getSystemService(AUDIO_SERVICE);
+        promise.resolve((am.getStreamVolume(AudioManager.STREAM_MUSIC)/am.getStreamMaxVolume(AudioManager.STREAM_MUSIC))*100);
     }
 
 }
