@@ -17,10 +17,4 @@ const CheckMute = NativeModules.CheckMute
       }
     );
 
-export async function isMute(): Promise<boolean> {
-  return await CheckMute.isMute();
-}
-
-export async function getCurrentVolume(): Promise<number> {
-  return await CheckMute.getCurrentVolume();
-}
+export default CheckMute;
