@@ -4,16 +4,18 @@ check mute for android and ios
 
 ```sh
 npm install react-native-check-mute
+yarn add react-native-check-mute
 ```
 
 ## Usage
 
 ```js
-import { multiply } from "react-native-check-mute";
+import { isMute, getCurrentVolume } from "react-native-check-mute";
 
 // ...
 
-const result = await multiply(3, 7);
+const isMute = await isMute();
+const currentVolume = await getCurrentVolume();
 ```
 
 ## Contributing
