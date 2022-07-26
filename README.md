@@ -10,12 +10,11 @@ yarn add react-native-check-mute
 ## Usage
 
 ```js
-import { isMute, getCurrentVolume } from "react-native-check-mute";
-
+import CheckMute from "react-native-check-mute";
 // ...
 
-const isMute = await isMute();
-const currentVolume = await getCurrentVolume();
+const isMute = await CheckMute.isMute();
+const currentVolume = await CheckMute.getCurrentVolume();
 ```
 
 ## Contributing
